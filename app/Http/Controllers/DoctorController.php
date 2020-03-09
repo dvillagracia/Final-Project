@@ -45,7 +45,6 @@ class DoctorController extends Controller
         $orders->orderDate = date("Y-m-d H:i:s");            
         $orders->message = $request->input('message');
         $orders->status = 'pending';       
-
         $orders->save();
 
         return redirect()->route('show.patient', $pat->id);
@@ -65,6 +64,8 @@ class DoctorController extends Controller
             ->select('patients.*', 'admissions.status')
             ->whereNotIn('status', ['discharge'])
             ->paginate(10);
+
+        // dd($patients);
 
         return view('doctors.patList', [
             'patients' => $patients
@@ -184,6 +185,20 @@ class DoctorController extends Controller
         $rbs_monitoring = Rbs::where('patient_id', $patid)->paginate(5);
 
         return view('nurses.rbs', compact('pat','admissions', 'patcharts', 'rbs_monitoring'));
+    }
+
+    public function storeDiagnosis(Request $request, Patient $pat)
+    {
+        $patid = $pat->id;
+
+        $diag = $request->input('diagnosis');
+
+        DB::table('admissions')
+                ->where('patient_id', $patid)
+                ->update(['diagnosis' => $diag]);
+
+        return redirect()->route('show.patient', $pat->id);
+
     }
 
     public function showIvf(Patient $pat)

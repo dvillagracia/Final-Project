@@ -23,14 +23,11 @@ class AdmissionsController extends Controller
     
     public function patientlist()
     {
-        //$patients = Patient::paginate(10);
         $patients = DB::table('patients')->join('admissions', 'patients.id', '=', 'admissions.patient_id')->select('patients.*', 'admissions.status')->whereNotIn('status', ['discharge'])->paginate(10);
         return view('admissions.list', compact('patients'));
     }
     public function search(Request $request){
-        // dd($request);
         $search = $request->get('search');
-
         $patients = DB::table('patients')
                     ->where('last_name', 'like', '%'.$search.'%')
                     ->orWhere('first_name', 'like', '%'.$search.'%')
@@ -59,7 +56,7 @@ class AdmissionsController extends Controller
 
         $newSection = $wordTest->addSection();
 
-        QrCode::size(5000)
+        QrCode::size(500)
                 ->format('png')
                 ->generate($patient->qr_code, base_path().$patient->patient_id.'.png');
         
@@ -121,7 +118,7 @@ class AdmissionsController extends Controller
                 
 
         $patient_id = $patient->id;
-        $patient->qr_code = "http://127.0.0.1:8000/showChart/{$patient_id}";        
+        $patient->qr_code = "192.168.1.159:8000/showChart/{$patient_id}";        
         $admission->patient_id = $patient_id;
         $patient->residence_id = $patient_id;
         $patient->guardian_id = $patient_id;
@@ -140,12 +137,5 @@ class AdmissionsController extends Controller
     public function profile(Patient $profile){
         return view('admissions.profile', compact('profile'));
     }
-
-    // protected function validatePatient(){
-    //     'last_name' => 'required',
-    //     'middle_name' => 'required',
-    //     'first_name' => 'required',
-    //     'last_name' => 'required',
-    // }
     
 }

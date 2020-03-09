@@ -105,6 +105,7 @@
     <div><br><br>
         <h5 style="background:#4dc090; padding: 10px 10px; padding-top:1.5%; color:white; font-family: 'Martel Sans', sans-serif; border-radius:12px 12px 0px 0px; font-size: 28px; text-align:center; margin-bottom: 30px;">GUARDIAN INFORMATION</h5>
         {!! Form::label('guardian_ last_name', 'Last Name') !!}
+
         {!! Form::text('guardian_last_name', null, ['class' => 'form-control', 'required']) !!}<br>
 
         {!! Form::label('guardian_first_name', 'First Name') !!}

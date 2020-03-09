@@ -36,8 +36,8 @@
 
 
                                 {{-- Bell Notification --}}
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <li class="nav-item dropdown" style="margin-top: 9px;">
+                            <a id="navbarDropdown" class="bell-notif dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 <i class="fa fa-bell"></i>
                                 @if(auth()->user()->unreadnotifications->count())
                             <span class="badge badge-light">{{auth()->user()->unreadnotifications->count()}}</span>
@@ -47,7 +47,6 @@
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <li><a style="color: green" class="dropdown-item" href="{{route('markRead')}}">Mark All As Read</a></li>
                                 @foreach(auth()->user()->unreadNotifications as $notification)
-
                             <li><a class="dropdown-item" style="background-color: lightgray" href="#">{{$notification->data['data']}}</a></li> 
                             @endforeach                               
                             </ul>
